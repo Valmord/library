@@ -15,6 +15,10 @@ function addBookToLibrary(name, author, pageCount, haveRead) {
 
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games - Catching Fire', 'Suzzane, Collins', 391, false); 
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 
 
 function displayBooks(){
@@ -29,3 +33,18 @@ function displayBooks(){
     table.appendChild(bookContainer);
   })
 }
+
+displayBooks();
+
+const modal = document.querySelector('.modal');
+const openModal = document.querySelector('.add-book');
+const closeModal = document.querySelector('.close-modal');
+openModal.addEventListener('click', () => modal.classList.toggle('hidden'));
+closeModal.addEventListener('click', () => modal.classList.toggle('hidden'));
+modal.addEventListener('click', event => {
+  console.log(event.target);
+  if (event.target !== modal) {
+    return;
+  }
+  modal.classList.toggle('hidden')
+});

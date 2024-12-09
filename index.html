@@ -17,5 +17,25 @@
       <th>Read Status</th>
     </tr> 
   </table>
+
+  <button class="add-book">Add New Book</button>
+
+  <div class="modal hidden">
+    <div class="add-book-modal">
+      <h2>Add Book</h2>
+      <form action="" id="add-book-form">
+        <label for="name">Book Name: </label>
+        <input type="text" id="name">
+        <label for="author">Book Author: </label>
+        <input type="text" id="author">
+        <label for="pages">Page Count: </label>
+        <input type="tel" id="pages">
+        <label for="read">Have Read: </label>
+        <input type="tel" id="read">
+      </form>
+      <button class="modal-add-but" form="add-book-form">Add Book</button>
+      <button class="close-modal">Close</button>
+    </div>
+  </div>
 </body>
 </html>
