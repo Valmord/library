@@ -20,12 +20,12 @@ addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games - Catching Fire', 'Suzzane, Collins', 391, false); 
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, true);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, true);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
-addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
-addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
-addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, true);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 
@@ -64,7 +64,8 @@ function createDeleteElement(index){
 
 function createNumElement(index){
   const numElement = document.createElement('td');
-  numElement.textContent = +index + 1;
+  if (isNaN(index)) numElement.textContent = '-'
+  else numElement.textContent = +index + 1;
   numElement.classList.add('book-num');
   return numElement;
 }
@@ -117,6 +118,7 @@ const addBookBtn = document.querySelector('.modal-add-but');
 addBookBtn.addEventListener('click', event => {
   event.stopPropagation();
   if (modalForm.checkValidity()) {
+    removeTotal();
     const book = addBookToLibrary(modalBookName.value,modalBookAuthor.value,
     modalBookPages.value,modalHaveRead.checked);
     displayBook(book, myLibrary.length-1);
@@ -138,3 +140,32 @@ function addReadStatusListener(elem){
     else elem.textContent = 'not read';
   })
 }
+
+function calculateTotals(){
+  const rows = document.querySelectorAll('tr');
+  let total = 0;
+  rows.forEach( (row) => {
+    const pageCount = row.childNodes[3].textContent;
+    const readStatus = row.childNodes[4].textContent === 'read' ? true : false;
+    if (readStatus) total += +pageCount;
+  })
+  return total;
+} 
+
+function displayTotal(){
+  removeTotal();
+  const fakeBook = new Book('','Total Read',calculateTotals(),'');
+  displayBook(fakeBook, 'fake');
+  const lastRow = document.querySelectorAll('tr')[myLibrary.length+1];
+  lastRow.childNodes[2].classList.add('bold');
+  lastRow.childNodes[3].classList.add('bold');
+}
+
+function removeTotal(){
+  const rows = document.querySelectorAll('tr');
+  if (rows.length-1 === myLibrary.length) return;
+  rows[myLibrary.length+1].remove();
+}
+
+const showTotalBut = document.querySelector('.show-pages-total');
+showTotalBut.onclick = displayTotal;
