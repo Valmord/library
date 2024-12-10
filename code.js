@@ -90,14 +90,14 @@ function displayBook(book,index){
 displayBooks();
 
 
-const modal = document.querySelector('.modal');
+const modal = document.querySelector('dialog');
 const openModal = document.querySelector('.add-book');
 const closeModal = document.querySelector('.close-modal');
 const modalForm = document.querySelector('#add-book-form');
 
-openModal.addEventListener('click', () => modal.classList.toggle('hidden'));
+openModal.addEventListener('click', () => modal.showModal());
 closeModal.addEventListener('click', event => {
-  modal.classList.toggle('hidden')
+  modal.close();
   event.stopPropagation();
   clearModal();
 })
@@ -105,7 +105,7 @@ modal.addEventListener('click', event => {
   if (event.target !== modal) {
     return;
   }
-  modal.classList.toggle('hidden')
+  modal.close();
 });
 
 
