@@ -37,22 +37,42 @@ function addDeleteListener(button){
 function deleteElement(ele){
   myLibrary.splice(ele.dataset.index,1);
   ele.parentElement.remove();
+  updateBookNumbers();
 }
 
+function updateBookNumbers(){
+  const bookNumElements = document.querySelectorAll('.book-num');
+  bookNumElements.forEach( (element, index) => {
+    element.textContent = index + 1;
+  })
+}
+
+function createDeleteElement(index){
+  const deleteElement = document.createElement('td');
+  deleteElement.textContent = 'X';
+  deleteElement.classList.add('delete-but');
+  deleteElement.dataset.index = index;
+  addDeleteListener(deleteElement);
+  return deleteElement;
+}
+
+function createNumElement(index){
+  const numElement = document.createElement('td');
+  numElement.textContent = +index + 1;
+  numElement.classList.add('book-num');
+  return numElement;
+}
 
 function displayBook(book,index){
   const bookContainer = document.createElement('tr');
+  bookContainer.appendChild(createNumElement(index));
   for (prop in book) {
     const bookElement = document.createElement('td');
     bookElement.textContent = book[prop];
     bookContainer.appendChild(bookElement);
   }
-  const deleteElement = document.createElement('td');
-  deleteElement.textContent = 'X';
-  deleteElement.classList.add('delete-but');
-  deleteElement.dataset.index = index;
-  bookContainer.appendChild(deleteElement);
-  addDeleteListener(deleteElement);
+  bookContainer.appendChild(createDeleteElement(index));
+
 
   table.appendChild(bookContainer);
 }
