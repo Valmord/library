@@ -8,6 +8,9 @@ function Book(name, author, pageCount, haveRead) {
 }
 
 function addBookToLibrary(name, author, pageCount, haveRead) {
+  author = author || 'unknown';
+  pageCount = pageCount || 0;
+  haveRead = haveRead ? 'read' : 'not read';
   const book = new Book(name, author, pageCount, haveRead);
   myLibrary.push(book);
   return book;
@@ -20,31 +23,64 @@ addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 
-
+const table = document.querySelector('table');
 function displayBooks(){
-  const table = document.querySelector('table');
-  myLibrary.forEach(book => {
-    const bookContainer = document.createElement('tr');
-    for (prop in book) {
-      const bookElement = document.createElement('td');
-      bookElement.textContent = book[prop];
-      bookContainer.appendChild(bookElement);
-    }
-    table.appendChild(bookContainer);
-  })
+  myLibrary.forEach(displayBook);
 }
 
+
+function displayBook(book){
+  const bookContainer = document.createElement('tr');
+  for (prop in book) {
+    const bookElement = document.createElement('td');
+    bookElement.textContent = book[prop];
+    bookContainer.appendChild(bookElement);
+  }
+  table.appendChild(bookContainer);
+}
 displayBooks();
+
 
 const modal = document.querySelector('.modal');
 const openModal = document.querySelector('.add-book');
 const closeModal = document.querySelector('.close-modal');
+const modalForm = document.querySelector('#add-book-form');
+
 openModal.addEventListener('click', () => modal.classList.toggle('hidden'));
-closeModal.addEventListener('click', () => modal.classList.toggle('hidden'));
+closeModal.addEventListener('click', event => {
+  modal.classList.toggle('hidden')
+  event.stopPropagation();
+  clearModal();
+})
 modal.addEventListener('click', event => {
-  console.log(event.target);
   if (event.target !== modal) {
     return;
   }
   modal.classList.toggle('hidden')
 });
+
+
+const modalBookName = document.querySelector('#name');
+const modalBookAuthor = document.querySelector('#author');
+const modalBookPages = document.querySelector('#pages');
+const modalHaveRead = document.querySelector('#read');
+const addBookBtn = document.querySelector('.modal-add-but');
+
+
+
+addBookBtn.addEventListener('click', event => {
+  event.stopPropagation();
+  if (modalForm.checkValidity()) {
+    const book = addBookToLibrary(modalBookName.value,modalBookAuthor.value,modalBookPages.value,modalHaveRead.checked);
+    displayBook(book);
+    clearModal();
+    event.preventDefault();
+  }
+})
+
+function clearModal(){
+  [modalBookName.value,
+  modalBookAuthor.value,
+  modalBookPages.value,
+  modalHaveRead.checked] = ['','','',false];
+}
