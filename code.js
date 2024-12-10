@@ -22,6 +22,12 @@ addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
+addBookToLibrary('The Hunger Games', 'Suzzane, Collins', 400, false);
 
 const table = document.querySelector('table');
 function displayBooks(){
@@ -69,6 +75,10 @@ function displayBook(book,index){
   for (prop in book) {
     const bookElement = document.createElement('td');
     bookElement.textContent = book[prop];
+    if (prop === 'haveRead') {
+      bookElement.classList.add('read-status');
+      addReadStatusListener(bookElement);
+    }
     bookContainer.appendChild(bookElement);
   }
   bookContainer.appendChild(createDeleteElement(index));
@@ -104,8 +114,6 @@ const modalBookPages = document.querySelector('#pages');
 const modalHaveRead = document.querySelector('#read');
 const addBookBtn = document.querySelector('.modal-add-but');
 
-
-
 addBookBtn.addEventListener('click', event => {
   event.stopPropagation();
   if (modalForm.checkValidity()) {
@@ -124,3 +132,9 @@ function clearModal(){
   modalHaveRead.checked] = ['','','',false];
 }
 
+function addReadStatusListener(elem){
+  elem.addEventListener('click', () => {
+    if (elem.textContent === 'not read') elem.textContent = 'read';
+    else elem.textContent = 'not read';
+  })
+}
