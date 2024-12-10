@@ -128,10 +128,7 @@ addBookBtn.addEventListener('click', event => {
 })
 
 function clearModal(){
-  [modalBookName.value,
-  modalBookAuthor.value,
-  modalBookPages.value,
-  modalHaveRead.checked] = ['','','',false];
+  modalForm.reset();
 }
 
 function addReadStatusListener(elem){
@@ -167,5 +164,7 @@ function removeTotal(){
   rows[myLibrary.length+1].remove();
 }
 
+const modalClearBut = document.querySelector('.clear-button');
+modalClearBut.onclick = clearModal;
 const showTotalBut = document.querySelector('.show-pages-total');
 showTotalBut.onclick = displayTotal;

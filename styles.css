@@ -94,6 +94,10 @@ dialog h2 {
   margin-bottom: 15px;
 }
 
+dialog::backdrop {
+  background-color: rgb(0,0,0,0.6);
+}
+
 .add-book-modal {
   --modal-height: 300px;
   --modal-width: 500px;
