@@ -28,14 +28,32 @@ function displayBooks(){
   myLibrary.forEach(displayBook);
 }
 
+function addDeleteListener(button){
+  button.addEventListener('click', () => {
+    deleteElement(button);
+  })
+}
 
-function displayBook(book){
+function deleteElement(ele){
+  myLibrary.splice(ele.dataset.index,1);
+  ele.parentElement.remove();
+}
+
+
+function displayBook(book,index){
   const bookContainer = document.createElement('tr');
   for (prop in book) {
     const bookElement = document.createElement('td');
     bookElement.textContent = book[prop];
     bookContainer.appendChild(bookElement);
   }
+  const deleteElement = document.createElement('td');
+  deleteElement.textContent = 'X';
+  deleteElement.classList.add('delete-but');
+  deleteElement.dataset.index = index;
+  bookContainer.appendChild(deleteElement);
+  addDeleteListener(deleteElement);
+
   table.appendChild(bookContainer);
 }
 displayBooks();
@@ -71,8 +89,9 @@ const addBookBtn = document.querySelector('.modal-add-but');
 addBookBtn.addEventListener('click', event => {
   event.stopPropagation();
   if (modalForm.checkValidity()) {
-    const book = addBookToLibrary(modalBookName.value,modalBookAuthor.value,modalBookPages.value,modalHaveRead.checked);
-    displayBook(book);
+    const book = addBookToLibrary(modalBookName.value,modalBookAuthor.value,
+    modalBookPages.value,modalHaveRead.checked);
+    displayBook(book, myLibrary.length-1);
     clearModal();
     event.preventDefault();
   }
@@ -84,3 +103,4 @@ function clearModal(){
   modalBookPages.value,
   modalHaveRead.checked] = ['','','',false];
 }
+

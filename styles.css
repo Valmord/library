@@ -29,7 +29,7 @@ td, th {
   padding: 1px 5px;
 }
 
-td:nth-child(3), td:nth-child(even){
+td:nth-child(2n+3), td:nth-child(even){
   text-align: center;
 }
 
@@ -43,6 +43,16 @@ tr:nth-child(2n+3){
 
 tr:nth-child(2n){
   background-color: rgb(230,230,230);
+}
+
+.delete-but {
+  font-weight: bold;
+  cursor: pointer;
+  color: darkgray;
+}
+
+.delete-but:hover {
+  color: red;
 }
 
 .add-book {
